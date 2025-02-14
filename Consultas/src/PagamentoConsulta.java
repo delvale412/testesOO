@@ -1,19 +1,19 @@
-class Pagamento {
+import java.math.BigDecimal; // Importação correta
 
-    public static void realizarPagamento(Consulta consulta, double valorPago) {
-        if (consulta == null) {
-            throw new IllegalArgumentException("Consulta não encontrada.");
-        }
+public class Pagamento {
+    public static void realizarPagamento(Consulta consulta, BigDecimal valorPago) {
+        if (consulta == null) throw new IllegalArgumentException("Consulta não encontrada.");
 
-        double valorConsulta = Double.parseDouble(consulta.getValor());
+        // Garantindo que o valor da consulta não seja nulo
+        BigDecimal valorConsulta = consulta.getValor();
+        if (valorConsulta == null) throw new IllegalArgumentException("Valor da consulta inválido.");
 
-        // Verifica se o valor pago é suficiente
-        if (valorPago >= valorConsulta) {
-            consulta.pagar();  // Marca a consulta como paga
-            System.out.println("Pagamento realizado com sucesso! Status da consulta: " + consulta.getStatus());
+        if (valorPago.compareTo(valorConsulta) >= 0) {
+            consulta.pagar();
+            System.out.println("Pagamento realizado com sucesso! Status: " + consulta.getStatus());
         } else {
-            consulta.pendente();  // Marca a consulta como pendente
-            System.out.println("Pagamento insuficiente. Status da consulta: " + consulta.getStatus());
+            consulta.pendente();
+            System.out.println("Pagamento insuficiente. Status: " + consulta.getStatus());
         }
     }
 }

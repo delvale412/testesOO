@@ -1,28 +1,31 @@
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Consulta {
-    private String data;
-    private String horario;
+    private LocalDate data;
+    private LocalTime horario;
     private String paciente;
     private String medico;
     private String status;
-    private String valor;
-    private boolean pago;  // Indica se a consulta foi paga
-    private Prescricao prescricao;  // A consulta agora tem uma prescrição associada
+    private BigDecimal valor;
+    private boolean pago;
+    private Prescricao prescricao;
 
-    // Construtor
-    public Consulta(String data, String horario, String paciente, String medico, String status,
-                    String valor) {
-        this.data = data;
-        this.horario = horario;
+    public Consulta(String data, String horario, String paciente, String medico, String status, String valor) {
+        this.data = LocalDate.parse(data);
+        this.horario = LocalTime.parse(horario);
         this.paciente = paciente;
         this.medico = medico;
         this.status = status;
-        this.valor = valor;
-        this.pago = false;  // Inicialmente, a consulta não está paga
-        this.prescricao = new Prescricao();  // Inicializa a prescrição para essa consulta
+        this.valor = new BigDecimal(valor);
+        this.pago = false;
+        this.prescricao = new Prescricao();
     }
 
-    // Métodos getters
-    public String getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
@@ -32,19 +35,18 @@ public class Consulta {
 
     public void pagar() {
         this.pago = true;
-        this.status = "Paga";  // Atualiza o status para "Paga"
+        this.status = "Paga";
     }
 
     public void pendente() {
         this.pago = false;
-        this.status = "Pendente";  // Atualiza o status para "Pendente"
+        this.status = "Pendente";
     }
 
     public String getStatus() {
-        return pago ? "Pago" : "Pendente";
+        return this.status;
     }
 
-    // Método para acessar a prescrição e prescrever medicamentos
     public Prescricao getPrescricao() {
         return prescricao;
     }
