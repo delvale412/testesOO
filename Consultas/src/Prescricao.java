@@ -5,7 +5,6 @@ public class Prescricao {
 
     private List<Medicamento> medicamentos;  // Lista de medicamentos prescritos
 
-    // Construtor
     public Prescricao() {
         this.medicamentos = new ArrayList<>();
     }
